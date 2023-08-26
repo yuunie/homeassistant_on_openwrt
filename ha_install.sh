@@ -47,11 +47,11 @@ is_lumi_gateway()
 
 function int_version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
 
-wget -q https://raw.fastgit.org/home-assistant/core/${HOMEASSISTANT_VERSION}/homeassistant/package_constraints.txt -O - > /tmp/ha_requirements.txt
-wget -q https://raw.fastgit.org/home-assistant/core/${HOMEASSISTANT_VERSION}/requirements.txt -O - >> /tmp/ha_requirements.txt
-wget -q https://raw.fastgit.org/home-assistant/core/${HOMEASSISTANT_VERSION}/requirements_all.txt -O - >> /tmp/ha_requirements.txt
+wget -q https://raw.gitmirror.com/home-assistant/core/${HOMEASSISTANT_VERSION}/homeassistant/package_constraints.txt -O - > /tmp/ha_requirements.txt
+wget -q https://raw.gitmirror.com/home-assistant/core/${HOMEASSISTANT_VERSION}/requirements.txt -O - >> /tmp/ha_requirements.txt
+wget -q https://raw.gitmirror.com/home-assistant/core/${HOMEASSISTANT_VERSION}/requirements_all.txt -O - >> /tmp/ha_requirements.txt
 # now we can fetch nabucasa version and its deps
-wget -q https://raw.fastgit.org/NabuCasa/hass-nabucasa/$(get_version hass-nabucasa)/setup.py -O - | grep '[>=]=' | sed -E 's/\s*"(.*)",?/\1/' >> /tmp/ha_requirements.txt
+wget -q https://raw.gitmirror.com/NabuCasa/hass-nabucasa/$(get_version hass-nabucasa)/setup.py -O - | grep '[>=]=' | sed -E 's/\s*"(.*)",?/\1/' >> /tmp/ha_requirements.txt
 
 PYCOGNITO_VER=$(get_version pycognito)
 HOMEASSISTANT_FRONTEND_VERSION=$(get_version home-assistant-frontend)
@@ -152,8 +152,8 @@ cd /tmp/
 
 # add missing _distutils_hack from setuptools
 mkdir -p /usr/lib/python${PYTHON_VERSION}/site-packages/_distutils_hack
-wget https://raw.fastgit.org/pypa/setuptools/v56.0.0/_distutils_hack/__init__.py -O /usr/lib/python${PYTHON_VERSION}/site-packages/_distutils_hack/__init__.py
-wget https://raw.fastgit.org/pypa/setuptools/v56.0.0/_distutils_hack/override.py -O /usr/lib/python${PYTHON_VERSION}/site-packages/_distutils_hack/override.py
+wget https://raw.gitmirror.com/pypa/setuptools/v56.0.0/_distutils_hack/__init__.py -O /usr/lib/python${PYTHON_VERSION}/site-packages/_distutils_hack/__init__.py
+wget https://raw.gitmirror.com/pypa/setuptools/v56.0.0/_distutils_hack/override.py -O /usr/lib/python${PYTHON_VERSION}/site-packages/_distutils_hack/override.py
 
 rm -rf /etc/homeassistant/deps/
 find /usr/lib/python${PYTHON_VERSION}/site-packages/ | grep -E "/__pycache__$" | xargs rm -rf
@@ -582,7 +582,7 @@ sed -i 's/to_context.deadline/hasattr(to_context, "deadline") and \0/' homeassis
 rm -rf /usr/lib/python${PYTHON_VERSION}/site-packages/homeassistant*
 
 if [ $(int_version ${PYTHON_VERSION}) -ge $(int_version '3.10') ]; then
-  wget https://raw.fastgit.org/pypa/pip/22.3.1/src/pip/__pip-runner__.py -O /usr/lib/python${PYTHON_VERSION}/site-packages/pip/__pip-runner__.py
+  wget https://raw.gitmirror.com/pypa/pip/22.3.1/src/pip/__pip-runner__.py -O /usr/lib/python${PYTHON_VERSION}/site-packages/pip/__pip-runner__.py
 fi
 
 if [ ! -f setup.py ]; then
